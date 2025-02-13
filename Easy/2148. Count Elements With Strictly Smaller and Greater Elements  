@@ -1,0 +1,9 @@
+class Solution:
+    def countElements(self, nums: List[int]) -> int:
+        high=max(nums)
+        low=min(nums)
+        count=0
+        for x in nums :
+            if x < high and x > low :
+                count+=1
+        return count
