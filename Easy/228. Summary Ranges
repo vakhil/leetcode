@@ -1,0 +1,32 @@
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        if len(nums) < 1 :
+            return []
+        start_series = False
+        start_number = 0
+        arr = []
+        previous = nums[0]
+        
+        for i in range(1,len(nums)) :
+            current = nums[i]
+            if current == previous + 1 :
+                if not start_series :
+                    start_number = nums[i-1]
+                start_series = True
+            elif start_series and current != previous + 1 :
+                end_series_number = previous
+                arr.append(f"{start_number}->{end_series_number}")
+                start_series = False
+                start_number = 0
+            else :
+                arr.append(f"{previous}")
+            previous = nums[i]
+        if not start_series:
+            arr.append(f"{previous}")
+        if start_series :
+            end_series_number = nums[-1]
+            arr.append(f"{start_number}->{end_series_number}")
+
+        return arr
+
+        
