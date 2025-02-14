@@ -1,0 +1,17 @@
+class ProductOfNumbers:
+    def __init__(self):
+        self.product_of_numbers = [1]  # Initialize with 1 to handle multiplication
+        self.last_zero_position = -1  # Track last zero index
+    
+    def add(self, num: int) -> None:
+        if num == 0:
+            self.last_zero_position = len(self.product_of_numbers)  # Mark zero position
+            self.product_of_numbers = [1]  # Reset product list after zero
+        else:
+            self.product_of_numbers.append(self.product_of_numbers[-1] * num)
+
+    def getProduct(self, k: int) -> int:
+        if k >= len(self.product_of_numbers):  
+            return 0  # If zero exists in the last k elements, product is 0
+        return self.product_of_numbers[-1] // self.product_of_numbers[-(k + 1)]
+
