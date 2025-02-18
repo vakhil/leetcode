@@ -7,3 +7,4 @@ class Solution:
             while stack and ( i == len(pattern) or  pattern[i] == 'I') :
                 res.append(str(stack.pop()))
         return "".join(res)       
+        
