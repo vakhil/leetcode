@@ -1,0 +1,25 @@
+class Solution:
+    def getHappyString(self, n: int, k: int) -> str:
+        lex_str = []
+        word_map = {"a": ["b","c"],"b":["a","c"],"c":["a","b"]}
+        def recursive(length,letter_choice,final_word):
+
+            if length == n :
+                lex_str.append(final_word)
+                return
+
+            if len(final_word) == 0:
+                for x in ["a","b","c"]:
+                    recursive(length+1,x,final_word+x)
+                     
+            else :
+                for x in word_map[final_word[-1]]:
+                    recursive(length+1,x,final_word+x)
+            
+
+        recursive(0,"","")
+        if k-1 >= len(lex_str) :
+            return ""
+        return lex_str[k-1]
+
+        
