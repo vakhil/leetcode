@@ -1,0 +1,45 @@
+class Solution:
+    def longestMountain(self, arr: List[int]) -> int:
+        high = 0
+        left = 0
+        right = 0
+        n = len(arr)
+        i = 0
+        mountain_len = 0 
+        while left < n :                
+            
+            # Get the left point a.k.a start of the mountain
+            while left < n-1 and arr[left] >= arr[left+1]:
+                left += 1 
+            
+            if left == n-1 :
+                left+=1
+                continue
+
+            right = left
+
+            while right < n-1 and arr[right] < arr[right+1] :
+                right += 1
+            mountain_len = right - left 
+            # right points to the head of the mountain 
+            # left also reaches the top of the mountain 
+            left = right
+            # The mountatin starts to decrease
+            while right < n-1 and arr[right] > arr[right+1]:
+                right+=1
+            temp_length = right - left
+            mountain_len += right - left  
+            
+
+            if temp_length == 0 :
+                continue
+
+            # Rechaed the downward point of one mountain 
+            high = max(high,mountain_len+1)
+            left = right 
+        return high
+
+     
+
+
+        
