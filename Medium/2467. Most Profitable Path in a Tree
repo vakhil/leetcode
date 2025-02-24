@@ -1,0 +1,50 @@
+from typing import List
+from collections import defaultdict
+
+class Solution:
+    def mostProfitablePath(self, edges: List[List[int]], bob: int, amount: List[int]) -> int:
+        # Step 1: Construct adjacency list (undirected tree)
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        # Step 2: Find Bob's path to root using DFS
+        bob_time = {}  # Store the time Bob reaches each node
+        def find_bob_path(node, parent, time):
+            if node == 0:
+                bob_time[node] = time
+                return True
+            for neighbor in graph[node]:
+                if neighbor != parent:
+                    if find_bob_path(neighbor, node, time + 1):
+                        bob_time[node] = time
+                        return True
+            return False
+        find_bob_path(bob, -1, 0)
+
+        # Step 3: Traverse Alice's path using DFS
+        def dfs_alice(node, parent, time):
+            alice_profit = 0
+            is_leaf = True  # Check if the node is a leaf
+            
+            if node in bob_time:  # Bob visits this node
+                if time < bob_time[node]:  
+                    alice_profit += amount[node]  # Alice gets full amount
+                elif time == bob_time[node]:
+                    alice_profit += amount[node] // 2  # Alice and Bob split amount
+            
+            else:
+                alice_profit += amount[node]  # Alice gets full amount if Bob doesn't visit
+
+            # Traverse child nodes
+            max_profit = float('-inf')
+            for neighbor in graph[node]:
+                if neighbor != parent:
+                    is_leaf = False
+                    max_profit = max(max_profit, dfs_alice(neighbor, node, time + 1))
+
+            return alice_profit if is_leaf else alice_profit + max_profit
+
+        # Step 4: Start DFS from node 0
+        return dfs_alice(0, -1, 0)

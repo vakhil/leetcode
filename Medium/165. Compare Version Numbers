@@ -1,0 +1,30 @@
+class Solution:
+    def compareVersion(self, version1: str, version2: str) -> int:
+        ver_list1 = version1.split(".")
+        ver_list2 = version2.split(".")
+
+        max_len = max(len(ver_list1),len(ver_list2))
+        
+        first_num = 0
+        second_num = 0 
+        flag = 0 
+        for i in range(max_len):
+            if i>= len(ver_list1) :
+                first_num = 0
+            else :
+                first_num = int(ver_list1[i])
+            if i>= len(ver_list2) :
+                second_num = 0
+            else :
+                second_num = int(ver_list2[i])
+            if first_num == second_num : 
+                flag = 0 
+                continue
+            if first_num < second_num :
+                flag = -1
+                break
+            if first_num > second_num :
+                flag = 1 
+                break
+            
+        return flag
