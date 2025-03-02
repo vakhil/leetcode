@@ -1,0 +1,22 @@
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        dict_number = defaultdict(list)
+
+        for i in range(len(numbers)):
+            dict_number[numbers[i]].append(i)
+                
+            
+        
+        for i in range(len(numbers)):
+            diff = target-numbers[i]
+            if (diff) in dict_number :
+                left_arr = dict_number[diff]
+                if i == left_arr :
+                    continue
+                if left_arr[0] == i :
+                    return [i+1,left_arr[1] +1]
+                else:
+                    return [i+1,left_arr[0]+1]
+        
+        return None 
+        
