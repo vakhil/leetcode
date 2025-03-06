@@ -1,0 +1,20 @@
+class Solution:
+    def findMissingAndRepeatedValues(self, grid: List[List[int]]) -> List[int]:
+        dict_int = {}
+        sums = 0 
+        repeat_no = 0
+        n = len(grid)
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] not in dict_int :
+                    dict_int[grid[i][j]]  = 1
+                elif dict_int[grid[i][j]]  == 1 :
+                    repeat_no = grid[i][j]
+                sums += grid[i][j]
+
+        miss_no = 0
+        squared = n*n
+
+        miss_no = repeat_no +(squared*(squared+1))//2 - sums
+        return [repeat_no, miss_no]
+        
