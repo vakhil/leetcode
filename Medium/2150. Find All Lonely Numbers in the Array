@@ -1,0 +1,13 @@
+class Solution:
+    def findLonely(self, nums: List[int]) -> List[int]:
+        number_dic = defaultdict(int)
+        for i in range(len(nums)):
+            number_dic[nums[i]] += 1 
+        
+        res = []
+        for i in number_dic :
+            if number_dic[i] < 2 and number_dic.get(i-1, 0) == 0 and number_dic.get(i+1, 0) == 0:
+                res.append(i)
+
+
+        return res
