@@ -1,0 +1,72 @@
+
+
+
+class Solution {
+
+     public static Stack<Integer> arrayToStack(int[] nums) {
+        Stack<Integer> stack = new Stack<>();
+
+        // Push elements in order
+        for (int num : nums) {
+            stack.push(num);
+        }
+       // System.out.println(stack);
+        return stack;
+    }
+
+    public void nextPermutation(int[] nums) {
+        Stack<Integer> stack = arrayToStack(nums);
+        int n = stack.size();
+        if(n == 1)
+            return;
+        int previous = stack.pop();
+        int flag = 0 ;
+        int current = previous ;
+        ArrayList<Integer> list = new ArrayList<>();
+         list.add(previous);
+
+        for(int i = nums.length-2;i >= 0 ; i--){
+            int temps  = current;
+            current = stack.pop();            
+            previous = temps;
+            if(previous > current){
+                flag = 1;
+                int temp = current;
+                
+                int minDiff = 999999;
+                int numberSupreme = 0;
+                for(int j = 0 ; j < list.size() ;j++){
+                    if(list.get(j)-temp >0 && list.get(j)-temp <= minDiff){
+                        minDiff = list.get(j)-temp ;
+                        numberSupreme = list.get(j);
+                    }
+                }
+                stack.push(numberSupreme);
+                list.add(temp);
+                
+                list.remove(Integer.valueOf(numberSupreme));
+                Collections.sort(list);
+
+                
+                
+                for(int j = 0 ; j < list.size(); j++){
+                    int num = list.get(j);
+                    stack.push(num);
+                }
+           
+                     break;
+            }
+            list.add(nums[i]);
+        }
+
+        if(flag == 1){
+            for (int i = 0; i < stack.size(); i++) {
+                        nums[i] = stack.get(i);
+                    }
+            return;
+        }
+        Arrays.sort(nums);
+        return;
+        
+    }
+}
