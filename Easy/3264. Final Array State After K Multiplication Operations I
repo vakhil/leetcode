@@ -1,0 +1,22 @@
+class Solution {
+    public int[] getFinalState(int[] nums, int k, int multiplier) {
+        int minValue;
+        int temp;
+
+        for (int i = 0; i < k; i++) {
+            minValue = Integer.MAX_VALUE;
+            temp = 0;
+
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[j] < minValue) {
+                    temp = j;
+                    minValue = nums[j];
+                }
+            }
+
+            nums[temp] *= multiplier;
+        }
+
+        return nums;
+    }
+}
