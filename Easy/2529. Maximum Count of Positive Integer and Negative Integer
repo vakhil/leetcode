@@ -1,0 +1,33 @@
+class Solution:
+  def maximumCount(self, nums: list[int]) -> int:
+    n = len(nums)
+    left = 0
+    right = n-1 
+    
+    # Want to find the first number greater than  0
+    while left <= right :
+        mid = (left+right)//2
+        if nums[mid] > 0 :
+            right = mid - 1 
+        elif nums[mid] < 0 :
+            left = mid + 1
+        elif nums[mid] == 0 :
+            left = mid + 1 
+
+    positive_no = n - left
+    print(positive_no)
+    left, right = 0, len(nums) - 1
+    result_index = -1
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if nums[mid] < 0:  # If arr[mid] is negative, it's a candidate
+            result_index = mid  # Update result
+            left = mid + 1  # Search in the right half for a closer value to 0
+        else:
+            right = mid - 1  # Search in the left half
+    
+
+    negative_no = result_index+1
+    return max(positive_no,negative_no)
+
