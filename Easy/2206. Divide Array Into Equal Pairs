@@ -1,0 +1,11 @@
+class Solution:
+    def divideArray(self, nums: List[int]) -> bool:
+        count_map = defaultdict(int)
+        for x in nums :
+            count_map[x] += 1 
+        
+        for y in count_map :
+            if count_map[y] % 2 == 1 :
+                return False
+        
+        return True
