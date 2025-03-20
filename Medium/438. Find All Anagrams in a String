@@ -1,0 +1,50 @@
+from typing import List
+
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        if len(p) > len(s):
+            return []
+        
+        result = []
+        p_count = [0] * 26  # Frequency array for `p`
+        s_count = [0] * 26  # Frequency array for sliding window in `s`
+        matches = 0  # Track how many characters match in frequency
+
+        # Initialize frequency arrays for `p` and first `len(p)` window in `s`
+        for i in range(len(p)):
+            p_count[ord(p[i]) - ord('a')] += 1
+            s_count[ord(s[i]) - ord('a')] += 1
+
+        # Count initial matches
+        for i in range(26):
+            if p_count[i] == s_count[i]:
+                matches += 1
+
+        # Start sliding the window
+        left = 0
+        for right in range(len(p), len(s)):
+            if matches == 26:
+                result.append(left)
+
+            # Add new character to window
+            new_char_index = ord(s[right]) - ord('a')
+            s_count[new_char_index] += 1
+            if s_count[new_char_index] == p_count[new_char_index]:
+                matches += 1
+            elif s_count[new_char_index] == p_count[new_char_index] + 1:
+                matches -= 1
+
+            # Remove old character from window
+            old_char_index = ord(s[left]) - ord('a')
+            s_count[old_char_index] -= 1
+            if s_count[old_char_index] == p_count[old_char_index]:
+                matches += 1
+            elif s_count[old_char_index] == p_count[old_char_index] - 1:
+                matches -= 1
+
+            left += 1  # Move window forward
+
+        if matches == 26:
+            result.append(left)
+
+        return result
