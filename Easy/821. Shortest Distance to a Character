@@ -1,0 +1,20 @@
+from typing import List
+
+class Solution:
+    def shortestToChar(self, s: str, c: str) -> List[int]:
+        same_indexes = []
+        for index, char in enumerate(s):
+            if char == c:
+                same_indexes.append(index)
+
+        arr_index = 0  
+        result_arr = []
+
+        for index in range(len(s)):
+            # Move arr_index forward only when the next occurrence is closer
+            if arr_index + 1 < len(same_indexes) and abs(same_indexes[arr_index + 1] - index) < abs(same_indexes[arr_index] - index):
+                arr_index += 1  
+
+            result_arr.append(abs(same_indexes[arr_index] - index))
+
+        return result_arr
